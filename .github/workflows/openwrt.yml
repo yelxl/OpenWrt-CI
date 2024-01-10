@@ -51,7 +51,7 @@ jobs:
         run: |
           echo "src-git helloworld https://github.com/fw876/helloworld" >> ./feeds.conf.default 
       - name: Install OpenClash
-        run: |
+        #run: |
           mkdir package/luci-app-openclash
           cd package/luci-app-openclash
           git init
