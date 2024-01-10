@@ -69,7 +69,7 @@ jobs:
           
       - name: Download package source code
         run: |
-          make download -j8
+          make download -j8 || make download -j1 || make download -j1 V=s
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
       - name : Upload artifact
