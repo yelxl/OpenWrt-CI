@@ -59,7 +59,7 @@ jobs:
           make defconfig
       - name: Download package source code
         run: |
-          make -j8 || make -j1 || make -j1 V=s
+          make download -j8 || make download -j1 || make download -j1 V=s
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
       - name : Upload artifact
