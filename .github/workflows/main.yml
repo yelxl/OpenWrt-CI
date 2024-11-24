@@ -46,8 +46,8 @@ jobs:
         run: |
           git clone https://github.com/coolsnowwolf/openwrt.git
           cp .config ./openwrt/.config
+          echo "CONFIG_ALL=y" >> ./openwrt/.config
           mv ./openwrt/* ./
-          sed -i -e 's,# CONFIG_ALL is not set,CONFIG_ALL=y,' ./.config
       - name: Install Helloword
         run: |
           echo "src-git helloworld https://github.com/fw876/helloworld" >> ./feeds.conf.default 
