@@ -68,6 +68,8 @@ jobs:
           git clone https://github.com/coolsnowwolf/lede.git
           cp .config ./lede/.config
           echo "CONFIG_ALL=y" >> ./lede/.config
+          echo "CONFIG_ALL_NONSHARED=y" >> ./lede/.config
+          echo "CONFIG_DOWNLOAD_ALL=y" >> ./lede/.config
           mv ./lede/* ./
       - name: Install Helloword
         run: |
