@@ -65,10 +65,10 @@ jobs:
 
       - name: Download lede
         run: |
-          git clone https://github.com/coolsnowwolf/openwrt.git
-          cp .config ./openwrt/.config
-          echo "CONFIG_ALL=y" >> ./openwrt/.config
-          mv ./openwrt/* ./
+          git clone https://github.com/coolsnowwolf/lede.git
+          cp .config ./lede/.config
+          echo "CONFIG_ALL=y" >> ./lede/.config
+          mv ./lede/* ./
       - name: Install Helloword
         run: |
           echo "src-git helloworld https://github.com/fw876/helloworld" >> ./feeds.conf.default 
