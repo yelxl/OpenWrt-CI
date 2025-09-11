@@ -15,8 +15,8 @@ on:
       - master
   #schedule:
     #- cron: 0 0 1 * *
-  #watch:
-    #types: started
+  watch:
+    types: started
 
 jobs:
   build:
@@ -44,25 +44,13 @@ jobs:
           sudo -E timedatectl set-timezone "Asia/Shanghai"
       - name: Download lede
         run: |
-          git clone https://github.com/coolsnowwolf/openwrt.git
-          cp .config ./openwrt/.config
-          mv ./openwrt/* ./
+          git clone https://github.com/coolsnowwolf/lede.git
+          cp .config ./lede/.config
+          mv ./lede/* ./
       - name: Install Helloword
         run: |
           echo "src-git helloworld https://github.com/fw876/helloworld" >> ./feeds.conf.default 
-      - name: Install OpenClash
-        run: |
-          mkdir package/luci-app-openclash
-          cd package/luci-app-openclash
-          git init
-          git remote add -f origin https://github.com/vernesong/OpenClash.git
-          git config core.sparsecheckout true
-          echo "luci-app-openclash" >> .git/info/sparse-checkout
-          git pull --depth 1 origin master
-          git branch --set-upstream-to=origin/master master
-          pushd luci-app-openclash/tools/po2lmo
-          make && sudo make install
-          popd
+          
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
@@ -74,11 +62,8 @@ jobs:
           sed -i "2i # network config" ./package/lean/default-settings/files/zzz-default-settings
           # 默认 IP 地址，旁路由时不会和主路由的 192.168.1.1 冲突
           sed -i "3i uci set network.lan.ipaddr='192.168.199.1'" ./package/lean/default-settings/files/zzz-default-settings
-          sed -i "4i uci set network.lan.proto='static'" ./package/lean/default-settings/files/zzz-default-settings # 静态 IP
-          sed -i "5i uci set network.lan.type='bridge'" ./package/lean/default-settings/files/zzz-default-settings  # 接口类型：桥接
-          sed -i "6i uci set network.lan.ifname='eth0'" ./package/lean/default-settings/files/zzz-default-settings  # 网络端口：默认 eth0，第一个接口
-          sed -i "7i uci set network.lan.netmask='255.255.255.0'" ./package/lean/default-settings/files/zzz-default-settings    # 子网掩码
-          sed -i "8i uci commit network\n" ./package/lean/default-settings/files/zzz-default-settings
+          sed -i "4i uci set network.lan.ifname='eth0'" ./package/lean/default-settings/files/zzz-default-settings  # 网络端口：默认 eth0，第一个接口
+          sed -i "5i uci commit network\n" ./package/lean/default-settings/files/zzz-default-settings
           
       - name: Download package source code
         run: |
